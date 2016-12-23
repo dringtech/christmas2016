@@ -1,5 +1,8 @@
 var dring = [];
 
+var tune_counter = 0;
+var tune = [ 64,64,64,0,64,64,64,0,64,67,60,62,64,0,0,0,65,65,65,65,65,64,64,64,64,62,62,64,62,0,67,0,64,64,64,0,64,64,64,0,64,67,60,62,64,0,0,0,65,65,65,65,65,64,64,64,67,67,65,62,60,0,0,0];
+
 var preload = function() {
   dring[0] = loadImage('./assets/Giles.png');
   dring[1] = loadImage('./assets/Rebecca.png');
@@ -64,6 +67,16 @@ var ping = (function() {
       env.setInput(osc1);
       env.setInput(osc2);
       if ( silence.off() ) env.play();
+    },
+    playMidi: function() {
+      midi = tune[tune_counter];
+      if (midi === 0) return;
+      var freq = midiToFreq(midi);
+      osc1.freq(freq);
+      osc2.freq(freq*1.02);
+      env.setInput(osc1);
+      env.setInput(osc2);
+      if ( silence.off() ) env.play();
     }
   };
 }());
@@ -77,7 +90,8 @@ var Flake = function(position) {
   this.scaled_width = 40;
   this.scaled_height = this.scaled_width * this.special_snowflake.height / this.special_snowflake.width;
 
-  ping.play(this.position.x);
+  // ping.play(this.position.x);
+  ping.playMidi();
 };
 
 Flake.prototype.run = function() {
@@ -126,6 +140,8 @@ SnowStorm.prototype.addFlake = function() {
 SnowStorm.prototype.run = function() {
   if ( this.nextArrival <= 0 ) {
     this.addFlake();
+    tune_counter++;
+    if (tune_counter > tune.length) { tune_counter = 0; }
     this.nextArrival = randomGaussian(20,5) + 10;
   } else {
     this.nextArrival--;
