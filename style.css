@@ -4,18 +4,22 @@ html, body {
 
 body {
   margin: 0;
-  font-family: 'Gravitas One', cursive;
+  font-family: 'Oleo Script', cursive;
 }
 
-h1 {
+h1, h2 {
   display: block;
   width: 500px;
   margin-top: 0;
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  color: Crimson;
 }
+
+h1 { color: Crimson; }
+
+h2 {}
+
 #sketch-holder {
   padding: 3rem;
 }
