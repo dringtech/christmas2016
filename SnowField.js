@@ -17,7 +17,7 @@ Flake.prototype.update = function(){
   this.position.add(
     map(noise(this.noisePos.x),0,1,-1,1),
     map(noise(this.noisePos.y),0,1,-0.5,1)
-  )
+  );
   this.position.add(this.velocity);
 };
 
@@ -50,7 +50,6 @@ SnowStorm.prototype.run = function() {
   if ( this.nextArrival <= 0 ) {
     this.addFlake();
     this.nextArrival = randomGaussian(20) + 10;
-    console.log("Arrival! " + this.nextArrival);
   } else {
     this.nextArrival--;
   }

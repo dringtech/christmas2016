@@ -1,27 +1,41 @@
-tree = function(col, depth) {
-  
-}
+treeFactory = function(col, depth) {
+  var tree = {};
+  var xPos = random(width);
+  var position = createVector(xPos, random(height, hills.horizon(xPos)));
+  tree.draw = function() {
+    fill(col);
+    noStroke();
+    ellipse(position.x, position.y, 20, 20);
+  };
+  return tree;
+};
+
+var hills;
+var storm;
+var cnv;
 
 function setup() {
-  createCanvas(600, 400);
-  hills = (function hills(col) {
-    h = {}
-    scaling = 0.005;
-    border = 100;
-    skyline = Array.apply(null, Array(width))
-      .map(function (_, i) { return map(noise(i*scaling),0,1,border,height-border); });
-    
-    h.draw = function() {
-      stroke(col);
-      skyline.map(function(h, i) {line(i,height,i,h)})
+  cnv = createCanvas(500, 300);
+  cnv.canvas.id = 'snowglobe';
+  cnv.parent('sketch-holder');
+  hills = hillFactory('PowderBlue');
+  forest = (function(count) {
+    var forest = {};
+    var trees = [];
+    for (var i = 0; i<count; i++) {
+      trees.push(treeFactory('Green', random(10)));
     }
-    return h
-  }('Azure'));
+    forest.draw = function() {
+      trees.forEach( function(item) { item.draw(); });
+    };
+    return forest;
+  }(5));
   storm = new SnowStorm();
 }
 
 function draw() {
-  background('MidnightBlue')
+  background('MidnightBlue');
   hills.draw();
+  forest.draw();
   storm.run();
 }

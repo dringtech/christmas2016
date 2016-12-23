@@ -1,0 +1,28 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Gravitas One', cursive;
+}
+
+h1 {
+  display: block;
+  width: 500px;
+  margin-top: 0;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  color: Crimson;
+}
+#sketch-holder {
+  padding: 3rem;
+}
+
+canvas#snowglobe {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  box-shadow: 0 10px 30px 10px DarkGray;
+}
