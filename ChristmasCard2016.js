@@ -53,6 +53,7 @@ function setup() {
     };
     return forest;
   }(50));
+
   storm = new SnowStorm();
 }
 
