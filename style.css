@@ -2,9 +2,13 @@ html, body {
   height: 100%;
 }
 
-body {
+body, button {
   margin: 0;
   font-family: 'Oleo Script', cursive;
+}
+
+.fullwidth {
+  width: 500px;
 }
 
 .centred {
@@ -14,14 +18,13 @@ body {
   text-align: center;
 }
 
-h1, h2, #controls {
-  width: 500px;
+h1, h2 {
   margin-top: 0;
 }
 
 h1 { color: Crimson; }
 
-h2 {}
+h2 { color: SeaGreen; }
 
 #sketch-holder {
   padding: 3rem;
@@ -34,6 +37,17 @@ canvas#snowglobe {
   box-shadow: 0 10px 30px 10px DarkGray;
 }
 
+#controls {
+  display: flex;
+}
 button {
   display: block;
+  background-color: SeaGreen; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.2rem;
 }
