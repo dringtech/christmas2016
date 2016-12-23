@@ -1,3 +1,12 @@
+var dring = [];
+
+var preload = function() {
+  dring[0] = loadImage('assets/Giles.png');
+  dring[1] = loadImage('assets/Rebecca.png');
+  dring[2] = loadImage('assets/Martha.png');
+  dring[3] = loadImage('assets/Bea.png');
+};
+
 var scaleMap = function(note) {
   var scale = [0, 2/12, 4/12, 5/12, 7/12, 9/12, 12/12];
   var octave = int(note);
@@ -30,7 +39,7 @@ var ping = (function() {
 
   var oscFactory = function(env) {
     var osc = new p5.Oscillator();
-    osc.setType('triangle');
+    osc.setType('sine');
     osc.amp(0);
     osc.start();
     return osc;
@@ -64,6 +73,7 @@ var Flake = function(position) {
   this.position = position.copy();
   this.noisePos = createVector(random(0,1000), random(0, 1000));
   this.increment = random(0.001, 0.01);
+  this.special_snowflake = dring[int(random(4))];
   ping.play(this.position.x);
 };
 
@@ -87,7 +97,11 @@ Flake.prototype.update = function(){
 Flake.prototype.display = function() {
   fill('white');
   noStroke();
-  ellipse(this.position.x, this.position.y, 12, 12);
+  // ellipse(this.position.x, this.position.y, 12, 12);
+  imageMode(CENTER);
+  var scaled_width = 30;
+  var scaled_height = scaled_width * this.special_snowflake.height / this.special_snowflake.width;
+  image(this.special_snowflake,this.position.x, this.position.y, scaled_width, scaled_height);
 };
 
 // Is the particle still useful?
