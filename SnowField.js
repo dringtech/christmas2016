@@ -1,10 +1,10 @@
 var dring = [];
 
 var preload = function() {
-  dring[0] = loadImage('assets/Giles.png');
-  dring[1] = loadImage('assets/Rebecca.png');
-  dring[2] = loadImage('assets/Martha.png');
-  dring[3] = loadImage('assets/Bea.png');
+  dring[0] = loadImage('./assets/Giles.png');
+  dring[1] = loadImage('./assets/Rebecca.png');
+  dring[2] = loadImage('./assets/Martha.png');
+  dring[3] = loadImage('./assets/Bea.png');
 };
 
 var scaleMap = function(note) {
@@ -74,6 +74,9 @@ var Flake = function(position) {
   this.noisePos = createVector(random(0,1000), random(0, 1000));
   this.increment = random(0.001, 0.01);
   this.special_snowflake = dring[int(random(4))];
+  this.scaled_width = 40;
+  this.scaled_height = this.scaled_width * this.special_snowflake.height / this.special_snowflake.width;
+
   ping.play(this.position.x);
 };
 
@@ -99,9 +102,7 @@ Flake.prototype.display = function() {
   noStroke();
   // ellipse(this.position.x, this.position.y, 12, 12);
   imageMode(CENTER);
-  var scaled_width = 30;
-  var scaled_height = scaled_width * this.special_snowflake.height / this.special_snowflake.width;
-  image(this.special_snowflake,this.position.x, this.position.y, scaled_width, scaled_height);
+  image(this.special_snowflake,this.position.x, this.position.y, this.scaled_width, this.scaled_height);
 };
 
 // Is the particle still useful?
