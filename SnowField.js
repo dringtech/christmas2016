@@ -71,7 +71,7 @@ var ping = (function() {
     playMidi: function() {
       midi = tune[tune_counter];
       if (midi === 0) return;
-      var freq = midiToFreq(midi);
+      var freq = midiToFreq(midi+12);
       osc1.freq(freq);
       osc2.freq(freq*1.02);
       env.setInput(osc1);
