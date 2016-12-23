@@ -1,12 +1,28 @@
-treeFactory = function(col, depth) {
+treeFactory = function(x, y) {
   var tree = {};
-  var xPos = random(width);
-  var position = createVector(xPos, random(height, hills.horizon(xPos)));
+  var position = createVector(x, y);
+  var green = lerpColor(
+                color('LimeGreen'),
+                color('DarkGreen'),
+                map(y, height, height*0.5, 0, 1));
   tree.draw = function() {
-    fill(col);
-    noStroke();
-    ellipse(position.x, position.y, 20, 20);
+    push();
+    strokeWeight(4);
+    translate(position.x, position.y);
+    scale(map(position.y,height,height*0.5,2,0.5));
+    translate(0,-50);
+    stroke('Brown');
+    line(0, 0, 0, 50);
+    stroke(green);
+    fill(green);
+    triangle(0, 0, 5, 10, -5, 10);
+    translate(0, 10);
+    triangle(0, 0, 10, 15, -10, 15);
+    translate(0, 10);
+    triangle(0, 0, 15, 20, -15, 20);
+    pop();
   };
+  tree.depth = position.y;
   return tree;
 };
 
@@ -19,17 +35,24 @@ function setup() {
   cnv.canvas.id = 'snowglobe';
   cnv.parent('sketch-holder');
   hills = hillFactory('PowderBlue');
-  forest = (function(count) {
+  forest = (function(spacing) {
     var forest = {};
     var trees = [];
-    for (var i = 0; i<count; i++) {
-      trees.push(treeFactory('Green', random(10)));
+    var spacingFn = function() {
+      randomGaussian(spacing);
+    };
+    for (var xPos  = randomGaussian(spacing/2, spacing*0.7);
+             xPos < width;
+             xPos += randomGaussian(spacing, spacing*0.7) ) {
+      var yPos = map(noise(xPos*100),0,1,height, hills.horizon(xPos));
+      trees.push(treeFactory(xPos, yPos));
     }
+    trees.sort(function(a, b) { return a.depth - b.depth; });
     forest.draw = function() {
       trees.forEach( function(item) { item.draw(); });
     };
     return forest;
-  }(5));
+  }(50));
   storm = new SnowStorm();
 }
 
