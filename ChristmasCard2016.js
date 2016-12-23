@@ -38,13 +38,10 @@ function setup() {
   forest = (function(spacing) {
     var forest = {};
     var trees = [];
-    var spacingFn = function() {
-      randomGaussian(spacing);
-    };
     for (var xPos  = randomGaussian(spacing/2, spacing*0.7);
              xPos < width;
              xPos += randomGaussian(spacing, spacing*0.7) ) {
-      var yPos = map(noise(xPos*100),0,1,height, hills.horizon(xPos));
+      var yPos = map(noise(xPos*100),0,1,height, hills.horizon(Math.max(xPos,0)));
       trees.push(treeFactory(xPos, yPos));
     }
     trees.sort(function(a, b) { return a.depth - b.depth; });
